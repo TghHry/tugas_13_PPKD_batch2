@@ -40,7 +40,15 @@ class _TambahKehadiranPageState extends State<TambahKehadiranPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text('Tambah Kehadiran')),
+      backgroundColor: Color(0xffD1D8BE),
+      appBar: AppBar(
+        centerTitle: true,
+        title: Text(
+          'Tambah Kehadiran',
+          style: TextStyle(color: Color(0xffEEEFE0)),
+        ),
+        backgroundColor: Colors.teal,
+      ),
       body: Padding(
         padding: const EdgeInsets.all(16),
         child: Form(

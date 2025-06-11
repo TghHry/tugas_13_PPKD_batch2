@@ -1,3 +1,7 @@
+
+import 'package:absensi_sederhana/laporan_kehadiran.dart';
+import 'package:absensi_sederhana/list_kehadiran.dart';
+import 'package:absensi_sederhana/register_page.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:absensi_sederhana/login_page.dart';
@@ -6,17 +10,18 @@ import 'package:absensi_sederhana/profil.dart';
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   final prefs = await SharedPreferences.getInstance();
-
   final name = prefs.getString('name');
   final email = prefs.getString('email');
   final phone = prefs.getString('phone');
 
-  runApp(MyApp(
-    isLoggedIn: name != null && email != null && phone != null,
-    name: name,
-    email: email,
-    phone: phone,
-  ));
+  runApp(
+    MyApp(
+      isLoggedIn: name != null && email != null && phone != null,
+      name: name,
+      email: email,
+      phone: phone,
+    ),
+  );
 }
 
 class MyApp extends StatelessWidget {
@@ -36,12 +41,19 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      initialRoute: TugasTigasBelas.id,
+      routes: {
+        TugasTigasBelas.id: (context) => TugasTigasBelas(),
+        LaporanKehadiranPage.id: (context) => LaporanKehadiranPage(),
+        ListKehadiranPage.id: (context) => ListKehadiranPage(),
+        RegisterPage.id: (context) => RegisterPage(),
+      },
       title: 'Login App',
       debugShowCheckedModeBanner: false,
-      home: isLoggedIn
-          ? ProfilPage(name: name!, email: email!, phone: phone!)
-          : TugasTigasBelas(),
+      home:
+          isLoggedIn
+              ? ProfilPage(name: name!, email: email!, phone: phone!)
+              : TugasTigasBelas(),
     );
   }
 }
-

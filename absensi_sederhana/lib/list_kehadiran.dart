@@ -4,6 +4,7 @@ import 'package:absensi_sederhana/edit_kehadiran.dart';
 import 'package:absensi_sederhana/tambah_kehadiran.dart';
 
 class ListKehadiranPage extends StatefulWidget {
+  static const String id = "/ListKehadiran";
   @override
   _ListKehadiranPageState createState() => _ListKehadiranPageState();
 }
@@ -23,7 +24,15 @@ class _ListKehadiranPageState extends State<ListKehadiranPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text("List Kehadiran")),
+      backgroundColor: Color(0xffD1D8BE),
+      appBar: AppBar(
+        title: Text(
+          "List Kehadiran",
+          style: TextStyle(color: Color(0xffEEEFE0)),
+        ),
+        centerTitle: true,
+        backgroundColor: Colors.teal,
+      ),
       body: FutureBuilder<List<Map<String, dynamic>>>(
         future: getData(),
         builder: (context, snapshot) {
@@ -36,31 +45,37 @@ class _ListKehadiranPageState extends State<ListKehadiranPage> {
             itemCount: data.length,
             itemBuilder: (context, index) {
               final item = data[index];
-              return ListTile(
-                leading: Icon(Icons.person),
-                title: Text(item['nama']),
-                subtitle: Text(
-                  "${item['keterangan']} (${item['tanggal'].substring(0, 10)})",
-                ),
-                trailing: Row(
-                  mainAxisSize: MainAxisSize.min,
-                  children: [
-                    IconButton(
-                      icon: Icon(Icons.edit),
-                      onPressed: () {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (_) => EditKehadiranPage(data: item),
-                          ),
-                        ).then((_) => setState(() {}));
-                      },
+              return Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Card(
+                  color: Color(0xffA7C1A8),
+                  child: ListTile(
+                    leading: Icon(Icons.person),
+                    title: Text(item['nama']),
+                    subtitle: Text(
+                      "${item['keterangan']} (${item['tanggal'].substring(0, 10)})",
                     ),
-                    IconButton(
-                      icon: Icon(Icons.delete),
-                      onPressed: () => _deleteData(item['id']),
+                    trailing: Row(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        IconButton(
+                          icon: Icon(Icons.edit),
+                          onPressed: () {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (_) => EditKehadiranPage(data: item),
+                              ),
+                            ).then((_) => setState(() {}));
+                          },
+                        ),
+                        IconButton(
+                          icon: Icon(Icons.delete),
+                          onPressed: () => _deleteData(item['id']),
+                        ),
+                      ],
                     ),
-                  ],
+                  ),
                 ),
               );
             },
@@ -68,14 +83,15 @@ class _ListKehadiranPageState extends State<ListKehadiranPage> {
         },
       ),
       floatingActionButton: FloatingActionButton(
+        backgroundColor: Colors.teal,
         onPressed:
             () => Navigator.push(
               context,
               MaterialPageRoute(builder: (context) => TambahKehadiranPage()),
             ).then((_) => setState(() {})), // Refresh after return
-        child: Icon(Icons.add),
+        child: Icon(Icons.add, color: Colors.black),
       ),
-      floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
+      // floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
     );
   }
 }
