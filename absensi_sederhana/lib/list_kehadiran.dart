@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:absensi_sederhana/database/db_helper.dart';
-import 'package:absensi_sederhana/edit_kehadiran.dart';
 import 'package:absensi_sederhana/tambah_kehadiran.dart';
+import 'package:absensi_sederhana/edit_kehadiran.dart';
+import 'package:absensi_sederhana/database/db_helper.dart';
 
 class ListKehadiranPage extends StatefulWidget {
   static const String id = "/ListKehadiran";
+
   @override
   _ListKehadiranPageState createState() => _ListKehadiranPageState();
 }
@@ -24,42 +25,50 @@ class _ListKehadiranPageState extends State<ListKehadiranPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Color(0xffD1D8BE),
+      backgroundColor: Color(0xffEEEFE0),
       appBar: AppBar(
-        title: Text(
-          "List Kehadiran",
-          style: TextStyle(color: Color(0xffEEEFE0)),
-        ),
+        leading: Container(),
+        title: Text("List Kehadiran", style: TextStyle(color: Colors.black)),
         centerTitle: true,
-        backgroundColor: Colors.teal,
+        backgroundColor: Colors.teal[300],
       ),
       body: FutureBuilder<List<Map<String, dynamic>>>(
         future: getData(),
         builder: (context, snapshot) {
-          if (!snapshot.hasData)
+          if (snapshot.connectionState == ConnectionState.waiting) {
             return Center(child: CircularProgressIndicator());
-          final data = snapshot.data!;
-          if (data.isEmpty)
+          } else if (!snapshot.hasData || snapshot.data!.isEmpty) {
             return Center(child: Text("Belum ada data kehadiran."));
+          }
+          final data = snapshot.data!;
           return ListView.builder(
+            padding: EdgeInsets.all(16.0),
             itemCount: data.length,
             itemBuilder: (context, index) {
               final item = data[index];
               return Padding(
-                padding: const EdgeInsets.all(8.0),
+                padding: const EdgeInsets.symmetric(vertical: 8.0),
                 child: Card(
-                  color: Color(0xffA7C1A8),
+                  color: Colors.white,
+                  elevation: 4,
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(12),
+                  ),
                   child: ListTile(
-                    leading: Icon(Icons.person),
-                    title: Text(item['nama']),
+                    leading: Icon(Icons.person, color: Colors.teal),
+                    title: Text(
+                      item['nama'],
+                      style: TextStyle(fontWeight: FontWeight.bold),
+                    ),
                     subtitle: Text(
                       "${item['keterangan']} (${item['tanggal'].substring(0, 10)})",
+                      style: TextStyle(color: Colors.black54),
                     ),
                     trailing: Row(
                       mainAxisSize: MainAxisSize.min,
                       children: [
                         IconButton(
-                          icon: Icon(Icons.edit),
+                          icon: Icon(Icons.edit, color: Colors.teal),
                           onPressed: () {
                             Navigator.push(
                               context,
@@ -70,7 +79,7 @@ class _ListKehadiranPageState extends State<ListKehadiranPage> {
                           },
                         ),
                         IconButton(
-                          icon: Icon(Icons.delete),
+                          icon: Icon(Icons.delete, color: Colors.red),
                           onPressed: () => _deleteData(item['id']),
                         ),
                       ],
@@ -91,7 +100,6 @@ class _ListKehadiranPageState extends State<ListKehadiranPage> {
             ).then((_) => setState(() {})), // Refresh after return
         child: Icon(Icons.add, color: Colors.black),
       ),
-      // floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
     );
   }
 }

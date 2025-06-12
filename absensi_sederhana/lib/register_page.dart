@@ -29,8 +29,7 @@ class _RegisterPageState extends State<RegisterPage> {
         centerTitle: true,
         leading: IconButton(
           icon: const Icon(Icons.arrow_back_ios, color: Colors.white),
-          onPressed: () {
-          },
+          onPressed: () {},
         ),
         title: Text("Registrasi", style: TextStyle(color: Colors.white)),
       ),
@@ -42,8 +41,6 @@ class _RegisterPageState extends State<RegisterPage> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
-                const SizedBox(height: 40),
-
                 // Header Text
                 Text(
                   "Registrasi",
@@ -63,13 +60,11 @@ class _RegisterPageState extends State<RegisterPage> {
 
                 const SizedBox(height: 40),
 
-                const SizedBox(height: 24),
-
-                // NAME
+                // Full Name
                 TextFormField(
                   validator:
                       (value) =>
-                          value == null || value.isEmpty ? "Wajib diisi" : null,
+                        value == null || value.isEmpty ? "Wajib diisi" : null,
                   style: TextStyle(color: Colors.white),
                   controller: namecontroller,
                   keyboardType: TextInputType.emailAddress,
@@ -77,31 +72,7 @@ class _RegisterPageState extends State<RegisterPage> {
                     labelText: "Full Name",
                     labelStyle: TextStyle(color: Colors.white),
                     errorStyle: TextStyle(color: Colors.white),
-                    hintText: "Enter Your Full Name",
-                    hintStyle: TextStyle(color: Colors.white70),
-                    prefixIcon: Icon(Icons.person, color: Colors.white70),
-                    enabledBorder: UnderlineInputBorder(
-                      borderSide: BorderSide(color: Colors.white10),
-                    ),
-                    focusedBorder: UnderlineInputBorder(
-                      borderSide: BorderSide(color: Colors.white),
-                    ),
-                  ),
-                ),
-                SizedBox(height: 24),
-                // Nick Name
-                TextFormField(
-                  validator:
-                      (value) =>
-                          value == null || value.isEmpty ? "Wajib diisi" : null,
-                  style: TextStyle(color: Colors.white),
-                  controller: usernamecontroller,
-                  keyboardType: TextInputType.emailAddress,
-                  decoration: InputDecoration(
-                    labelText: "Nick Name",
-                    labelStyle: TextStyle(color: Colors.white),
-                    errorStyle: TextStyle(color: Colors.white),
-                    hintText: "Enter Your Full Nick Name",
+                    hintText: "Enter your full name",
                     hintStyle: TextStyle(color: Colors.white70),
                     prefixIcon: Icon(
                       Icons.person_2_outlined,
@@ -116,6 +87,32 @@ class _RegisterPageState extends State<RegisterPage> {
                   ),
                 ),
                 SizedBox(height: 24),
+
+                // User Name
+                TextFormField(
+                  validator:
+                      (value) =>
+                          value == null || value.isEmpty ? "Wajib diisi" : null,
+                  style: TextStyle(color: Colors.white),
+                  controller: usernamecontroller,
+                  keyboardType: TextInputType.emailAddress,
+                  decoration: InputDecoration(
+                    labelText: "Nick Name",
+                    labelStyle: TextStyle(color: Colors.white),
+                    errorStyle: TextStyle(color: Colors.white),
+                    hintText: "Enter your nick name",
+                    hintStyle: TextStyle(color: Colors.white70),
+                    prefixIcon: Icon(Icons.person, color: Colors.white70),
+                    enabledBorder: UnderlineInputBorder(
+                      borderSide: BorderSide(color: Colors.white),
+                    ),
+                    focusedBorder: UnderlineInputBorder(
+                      borderSide: BorderSide(color: Colors.white),
+                    ),
+                  ),
+                ),
+                SizedBox(height: 24),
+
                 //PHONE
                 TextFormField(
                   validator:
@@ -159,7 +156,7 @@ class _RegisterPageState extends State<RegisterPage> {
                     hintStyle: TextStyle(color: Colors.white70),
                     prefixIcon: Icon(Icons.email, color: Colors.white70),
                     enabledBorder: UnderlineInputBorder(
-                      borderSide: BorderSide(color: Colors.white10),
+                      borderSide: BorderSide(color: Colors.white),
                     ),
                     focusedBorder: UnderlineInputBorder(
                       borderSide: BorderSide(color: Colors.white),
@@ -192,7 +189,7 @@ class _RegisterPageState extends State<RegisterPage> {
                       },
                     ),
                     enabledBorder: UnderlineInputBorder(
-                      borderSide: BorderSide(color: Colors.white10),
+                      borderSide: BorderSide(color: Colors.white),
                     ),
                     focusedBorder: UnderlineInputBorder(
                       borderSide: BorderSide(color: Colors.white),
@@ -202,7 +199,7 @@ class _RegisterPageState extends State<RegisterPage> {
 
                 const SizedBox(height: 40),
 
-                // Login Button
+                // Register Button
                 SizedBox(
                   width: 300,
                   height: 40,
@@ -250,12 +247,10 @@ class _RegisterPageState extends State<RegisterPage> {
                     ),
                   ),
                 ),
-
-                const SizedBox(height: 60),
-
+                const SizedBox(height: 16),
                 // Divider with "or"
                 Row(
-                  children: [
+                  children: const [
                     Expanded(child: Divider(color: Colors.white54)),
                     Padding(
                       padding: EdgeInsets.symmetric(horizontal: 10),
@@ -268,30 +263,7 @@ class _RegisterPageState extends State<RegisterPage> {
                   ],
                 ),
 
-                const SizedBox(height: 30),
-
-                // Facebook Button
-                SizedBox(
-                  width: double.infinity,
-                  height: 50,
-                  child: ElevatedButton.icon(
-                    style: ElevatedButton.styleFrom(
-                      backgroundColor: Colors.white10,
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(30),
-                      ),
-                    ),
-                    icon: const Icon(Icons.facebook, color: Colors.white),
-                    onPressed: () {},
-                    label: const Text(
-                      "Facebook",
-                      style: TextStyle(color: Colors.white),
-                    ),
-                  ),
-                ),
-
                 const SizedBox(height: 16),
-                SizedBox(height: 30),
 
                 // Sign up link
                 Row(
@@ -307,7 +279,7 @@ class _RegisterPageState extends State<RegisterPage> {
                         // TODO : HAndle sign up
                       },
                       child: Text(
-                        "   Sign In",
+                        "   Sign Up",
                         style: TextStyle(
                           color: Colors.white,
                           fontWeight: FontWeight.bold,

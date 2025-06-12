@@ -4,7 +4,7 @@ import 'package:absensi_sederhana/database/db_helper.dart';
 class EditKehadiranPage extends StatefulWidget {
   static const String id = "/EditKehadiranPage";
 
-  final Map<String, dynamic> data; 
+  final Map<String, dynamic> data;
 
   EditKehadiranPage({required this.data});
 
@@ -54,13 +54,10 @@ class _EditKehadiranPageState extends State<EditKehadiranPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Color(0xffD1D8BE),
+      backgroundColor: Color(0xffEEEFE0),
       appBar: AppBar(
-        title: Text(
-          'Edit Kehadiran',
-          style: TextStyle(color: Color(0xffEEEFE0)),
-        ),
-        backgroundColor: Color(0xff819A91),
+        title: Text('Edit Kehadiran', style: TextStyle(color: Colors.black)),
+        backgroundColor: Colors.teal[300],
         centerTitle: true,
       ),
       body: Padding(

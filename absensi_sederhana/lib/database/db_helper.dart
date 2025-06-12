@@ -1,7 +1,5 @@
-import 'package:absensi_sederhana/model/model.dart';
 import 'package:sqflite/sqflite.dart';
 import 'package:path/path.dart';
-
 
 class DbHelper {
   static Future<Database> initDB() async {
@@ -63,41 +61,5 @@ class DbHelper {
       'password': password,
     }, conflictAlgorithm: ConflictAlgorithm.replace);
     print("User Registrasi Success");
-  }
-
-  // --- CRUD KEHADIRAN ---
-
-  // Create
-  static Future<void> insertKehadiran(Kehadiran data) async {
-    final db = await initDB();
-    await db.insert(
-      'kehadiran',
-      data.toMap(),
-      conflictAlgorithm: ConflictAlgorithm.replace,
-    );
-  }
-
-  // Read
-  static Future<List<Kehadiran>> getAllKehadiran() async {
-    final db = await initDB();
-    final List<Map<String, dynamic>> maps = await db.query('kehadiran');
-    return List.generate(maps.length, (i) => Kehadiran.fromMap(maps[i]));
-  }
-
-  // Update
-  static Future<void> updateKehadiran(Kehadiran data) async {
-    final db = await initDB();
-    await db.update(
-      'kehadiran',
-      data.toMap(),
-      where: 'id = ?',
-      whereArgs: [data.id],
-    );
-  }
-
-  // Delete
-  static Future<void> deleteKehadiran(int id) async {
-    final db = await initDB();
-    await db.delete('kehadiran', where: 'id = ?', whereArgs: [id]);
   }
 }

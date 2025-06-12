@@ -1,10 +1,14 @@
 import 'package:absensi_sederhana/laporan_kehadiran.dart';
 import 'package:absensi_sederhana/list_kehadiran.dart';
 import 'package:absensi_sederhana/profil.dart';
-
 import 'package:flutter/material.dart';
 
 class BottomNavigator extends StatefulWidget {
+  final String name;
+  final String email;
+  final String phone;
+
+  
   BottomNavigator({
     super.key,
     required this.name,
@@ -12,10 +16,7 @@ class BottomNavigator extends StatefulWidget {
     required this.phone,
   });
 
-  final String name;
-  final String email;
-  final String phone;
-
+ 
   @override
   State<BottomNavigator> createState() => _BottomNavigatorState();
 }

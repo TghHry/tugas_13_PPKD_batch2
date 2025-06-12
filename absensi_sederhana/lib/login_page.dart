@@ -1,18 +1,18 @@
 import 'package:absensi_sederhana/register_page.dart';
 import 'package:absensi_sederhana/bottom_navigator.dart';
-import 'package:flutter/material.dart';
 import 'package:absensi_sederhana/database/db_helper.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:flutter/material.dart';
 
-class TugasTigasBelas extends StatefulWidget {
-  const TugasTigasBelas({super.key});
-  static const String id = "/TugasTigaBelas";
+class LoginPage extends StatefulWidget {
+  const LoginPage({super.key});
+  static const String id = "/LoginPage";
 
   @override
-  State<TugasTigasBelas> createState() => _TugasTigaBelasState();
+  State<LoginPage> createState() => _LoginPageState();
 }
 
-class _TugasTigaBelasState extends State<TugasTigasBelas> {
+class _LoginPageState extends State<LoginPage> {
   bool _obscureTextA = true;
   final TextEditingController emailcontroller = TextEditingController();
   final TextEditingController passwordcontroller = TextEditingController();
@@ -126,8 +126,6 @@ class _TugasTigaBelasState extends State<TugasTigasBelas> {
                         await prefs.setString('email', userData['email']);
                         await prefs.setString('phone', userData['phone']);
 
-                        // print('data ada ${userData.toString()}');
-
                         if (!context.mounted) return;
                         ScaffoldMessenger.of(context).showSnackBar(
                           const SnackBar(content: Text("Login berhasil")),
@@ -163,7 +161,7 @@ class _TugasTigaBelasState extends State<TugasTigasBelas> {
                 ),
               ),
 
-              const SizedBox(height: 60),
+              const SizedBox(height: 30),
 
               // Divider with "or"
               Row(
@@ -175,28 +173,6 @@ class _TugasTigaBelasState extends State<TugasTigasBelas> {
                   ),
                   Expanded(child: Divider(color: Colors.white54)),
                 ],
-              ),
-
-              const SizedBox(height: 30),
-
-              // Facebook Button
-              SizedBox(
-                width: double.infinity,
-                height: 50,
-                child: ElevatedButton.icon(
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor: Colors.white10,
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(30),
-                    ),
-                  ),
-                  icon: const Icon(Icons.facebook, color: Colors.white),
-                  onPressed: () {},
-                  label: const Text(
-                    "Facebook",
-                    style: TextStyle(color: Colors.white),
-                  ),
-                ),
               ),
 
               const SizedBox(height: 16),

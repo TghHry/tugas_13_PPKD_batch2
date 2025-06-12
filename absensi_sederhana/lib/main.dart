@@ -1,4 +1,3 @@
-
 import 'package:absensi_sederhana/laporan_kehadiran.dart';
 import 'package:absensi_sederhana/list_kehadiran.dart';
 import 'package:absensi_sederhana/register_page.dart';
@@ -41,9 +40,9 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      initialRoute: TugasTigasBelas.id,
+      initialRoute: '/login',
       routes: {
-        TugasTigasBelas.id: (context) => TugasTigasBelas(),
+        '/login': (context) => LoginPage(),
         LaporanKehadiranPage.id: (context) => LaporanKehadiranPage(),
         ListKehadiranPage.id: (context) => ListKehadiranPage(),
         RegisterPage.id: (context) => RegisterPage(),
@@ -53,7 +52,7 @@ class MyApp extends StatelessWidget {
       home:
           isLoggedIn
               ? ProfilPage(name: name!, email: email!, phone: phone!)
-              : TugasTigasBelas(),
+              : LoginPage(),
     );
   }
 }
