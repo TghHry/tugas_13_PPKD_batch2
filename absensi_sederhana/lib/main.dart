@@ -1,58 +1,39 @@
+
 import 'package:absensi_sederhana/laporan_kehadiran.dart';
-import 'package:absensi_sederhana/list_kehadiran.dart';
 import 'package:absensi_sederhana/register_page.dart';
 import 'package:flutter/material.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 import 'package:absensi_sederhana/login_page.dart';
-import 'package:absensi_sederhana/profil.dart';
 
-void main() async {
-  WidgetsFlutterBinding.ensureInitialized();
-  final prefs = await SharedPreferences.getInstance();
-  final name = prefs.getString('name');
-  final email = prefs.getString('email');
-  final phone = prefs.getString('phone');
 
-  runApp(
-    MyApp(
-      isLoggedIn: name != null && email != null && phone != null,
-      name: name,
-      email: email,
-      phone: phone,
-    ),
-  );
+void main() {
+  runApp(const MyApp());
 }
 
 class MyApp extends StatelessWidget {
-  final bool isLoggedIn;
-  final String? name;
-  final String? email;
-  final String? phone;
-
-  const MyApp({
-    super.key,
-    required this.isLoggedIn,
-    this.name,
-    this.email,
-    this.phone,
-  });
+  const MyApp({super.key});
 
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      initialRoute: '/login',
+      initialRoute: '/',
       routes: {
-        '/login': (context) => LoginPage(),
-        LaporanKehadiranPage.id: (context) => LaporanKehadiranPage(),
-        ListKehadiranPage.id: (context) => ListKehadiranPage(),
-        RegisterPage.id: (context) => RegisterPage(),
+        "/": (context) => LoginPage(),
+        "/laporan": (context) => LaporanKehadiranPage(),
+        "/registrasi": (context) => RegisterPage(),
       },
-      title: 'Login App',
       debugShowCheckedModeBanner: false,
-      home:
-          isLoggedIn
-              ? ProfilPage(name: name!, email: email!, phone: phone!)
-              : LoginPage(),
+      title: 'PPKD B 2',
+      theme: ThemeData(
+        // useMaterial3: true,
+        fontFamily: 'Poppins',
+        colorScheme: ColorScheme.fromSeed(seedColor: Colors.blue),
+        pageTransitionsTheme: PageTransitionsTheme(
+          builders: {TargetPlatform.android: CupertinoPageTransitionsBuilder()},
+        ),
+      ),
     );
   }
 }
+
+
+

@@ -11,12 +11,6 @@ class LaporanKehadiranPage extends StatefulWidget {
 class _LaporanKehadiranPageState extends State<LaporanKehadiranPage> {
   Map<String, Map<String, int>> laporanPerOrang = {};
 
-  @override
-  void initState() {
-    super.initState();
-    loadLaporan();
-  }
-
   Future<void> loadLaporan() async {
     final db = await DbHelper.initDB();
     final result = await db.rawQuery('''
@@ -39,7 +33,15 @@ class _LaporanKehadiranPageState extends State<LaporanKehadiranPage> {
 
       laporanPerOrang = laporanBaru;
     });
+  } 
+
+  @override
+  void initState() {
+    super.initState();
+    loadLaporan();
   }
+
+  
 
   @override
   Widget build(BuildContext context) {
@@ -50,9 +52,7 @@ class _LaporanKehadiranPageState extends State<LaporanKehadiranPage> {
         backgroundColor: Colors.teal[300],
         title: Text("Laporan Kehadiran", style: TextStyle(color: Colors.black)),
         centerTitle: true,
-        actions: [
-          // IconButton(onPressed: loadLaporan, icon: Icon(Icons.refresh)),
-        ],
+        actions: [],
       ),
       body: GridView.builder(
         padding: EdgeInsets.all(16),
@@ -108,4 +108,3 @@ class _LaporanKehadiranPageState extends State<LaporanKehadiranPage> {
     );
   }
 }
-

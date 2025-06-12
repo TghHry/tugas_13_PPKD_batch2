@@ -80,7 +80,41 @@ class _ListKehadiranPageState extends State<ListKehadiranPage> {
                         ),
                         IconButton(
                           icon: Icon(Icons.delete, color: Colors.red),
-                          onPressed: () => _deleteData(item['id']),
+                          onPressed: () {
+                            // Menampilkan dialog konfirmasi
+                            showDialog(
+                              context: context,
+                              builder: (BuildContext context) {
+                                return AlertDialog(
+                                  title: Text("Konfirmasi Hapus"),
+                                  content: Text(
+                                    "Apakah Anda yakin ingin menghapus data ini?",
+                                  ),
+                                  actions: [
+                                    TextButton(
+                                      child: Text("Batal"),
+                                      onPressed: () {
+                                        Navigator.of(
+                                          context,
+                                        ).pop(); // Menutup dialog
+                                      },
+                                    ),
+                                    TextButton(
+                                      child: Text("Hapus"),
+                                      onPressed: () {
+                                        _deleteData(
+                                          item['id'],
+                                        ); // Memanggil fungsi hapus data
+                                        Navigator.of(
+                                          context,
+                                        ).pop(); // Menutup dialog
+                                      },
+                                    ),
+                                  ],
+                                );
+                              },
+                            );
+                          },
                         ),
                       ],
                     ),
