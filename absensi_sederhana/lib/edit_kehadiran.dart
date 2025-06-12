@@ -61,42 +61,53 @@ class _EditKehadiranPageState extends State<EditKehadiranPage> {
         centerTitle: true,
       ),
       body: Padding(
-        padding: const EdgeInsets.all(16),
-        child: Form(
-          key: _formKey,
-          child: Column(
-            children: [
-              TextFormField(
-                controller: namaController,
-                decoration: InputDecoration(labelText: 'Nama'),
-                validator:
-                    (val) => val!.isEmpty ? 'Nama tidak boleh kosong' : null,
+        padding: EdgeInsets.only(top: 12),
+        child: Card(
+          elevation: 4,
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(50),
+          ),
+          child: Padding(
+            padding: const EdgeInsets.all(16),
+            child: Form(
+              key: _formKey,
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  TextFormField(
+                    controller: namaController,
+                    decoration: InputDecoration(labelText: 'Nama'),
+                    validator:
+                        (val) =>
+                            val!.isEmpty ? 'Nama tidak boleh kosong' : null,
+                  ),
+                  SizedBox(height: 16),
+                  DropdownButtonFormField<String>(
+                    value: selectedKeterangan,
+                    items:
+                        ['Hadir', 'Izin', 'Alpha'].map((status) {
+                          return DropdownMenuItem(
+                            value: status,
+                            child: Text(status),
+                          );
+                        }).toList(),
+                    onChanged: (val) {
+                      setState(() {
+                        selectedKeterangan = val!;
+                      });
+                    },
+                    decoration: InputDecoration(labelText: 'Keterangan'),
+                    validator:
+                        (val) =>
+                            val == null || val.isEmpty
+                                ? 'Keterangan wajib dipilih'
+                                : null,
+                  ),
+                  SizedBox(height: 16),
+                  ElevatedButton(onPressed: _updateData, child: Text('Update')),
+                ],
               ),
-              SizedBox(height: 16),
-              DropdownButtonFormField<String>(
-                value: selectedKeterangan,
-                items:
-                    ['Hadir', 'Izin', 'Alpha'].map((status) {
-                      return DropdownMenuItem(
-                        value: status,
-                        child: Text(status),
-                      );
-                    }).toList(),
-                onChanged: (val) {
-                  setState(() {
-                    selectedKeterangan = val!;
-                  });
-                },
-                decoration: InputDecoration(labelText: 'Keterangan'),
-                validator:
-                    (val) =>
-                        val == null || val.isEmpty
-                            ? 'Keterangan wajib dipilih'
-                            : null,
-              ),
-              SizedBox(height: 16),
-              ElevatedButton(onPressed: _updateData, child: Text('Update')),
-            ],
+            ),
           ),
         ),
       ),

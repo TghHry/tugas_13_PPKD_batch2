@@ -42,45 +42,53 @@ class _TambahKehadiranPageState extends State<TambahKehadiranPage> {
       backgroundColor: Color(0xffEEEFE0),
       appBar: AppBar(
         centerTitle: true,
-        title: Text(
-          'Tambah Kehadiran',
-          style: TextStyle(color: Colors.black),
-        ),
+        title: Text('Tambah Kehadiran', style: TextStyle(color: Colors.black)),
         backgroundColor: Colors.teal[300],
       ),
       body: Padding(
-        padding: const EdgeInsets.all(16),
-        child: Form(
-          key: _formKey,
-          child: Column(
-            children: [
-              TextFormField(
-                controller: namaController,
-                decoration: InputDecoration(labelText: 'Nama'),
-                validator: (val) => val!.isEmpty ? 'Wajib diisi' : null,
+        padding: const EdgeInsets.all(8.0),
+        child: Card(
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(50),
+          ),
+          elevation: 9,
+          child: Padding(
+            padding: const EdgeInsets.all(16),
+            child: Form(
+              key: _formKey,
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  TextFormField(
+                    controller: namaController,
+                    decoration: InputDecoration(labelText: 'Nama'),
+                    validator: (val) => val!.isEmpty ? 'Wajib diisi' : null,
+                  ),
+                  SizedBox(height: 16),
+                  DropdownButtonFormField<String>(
+                    value: selectedKeterangan,
+                    items:
+                        ['Hadir', 'Izin', 'Alpha'].map((status) {
+                          return DropdownMenuItem<String>(
+                            value: status,
+                            child: Text(status),
+                          );
+                        }).toList(),
+                    onChanged: (val) {
+                      setState(() {
+                        selectedKeterangan = val!;
+                      });
+                    },
+                    decoration: InputDecoration(labelText: 'Keterangan'),
+                  ),
+                  SizedBox(height: 16),
+                  ElevatedButton(
+                    onPressed: _simpanKehadiran,
+                    child: Text('Simpan'),
+                  ),
+                ],
               ),
-              SizedBox(height: 16),
-              DropdownButtonFormField<String>(
-                value: selectedKeterangan,
-                items: ['Hadir', 'Izin', 'Alpha'].map((status) {
-                  return DropdownMenuItem<String>(
-                    value: status,
-                    child: Text(status),
-                  );
-                }).toList(),
-                onChanged: (val) {
-                  setState(() {
-                    selectedKeterangan = val!;
-                  });
-                },
-                decoration: InputDecoration(labelText: 'Keterangan'),
-              ),
-              SizedBox(height: 16),
-              ElevatedButton(
-                onPressed: _simpanKehadiran,
-                child: Text('Simpan'),
-              ),
-            ],
+            ),
           ),
         ),
       ),
