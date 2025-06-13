@@ -42,7 +42,7 @@ class _LaporanKehadiranPageState extends State<LaporanKehadiranPage> {
     });
   }
 
-  @override
+ @override
   void initState() {
     super.initState();
     loadLaporan();

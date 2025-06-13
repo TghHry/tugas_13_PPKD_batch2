@@ -2,6 +2,7 @@ import 'package:absensi_sederhana/register_page.dart';
 import 'package:absensi_sederhana/bottom_navigator.dart';
 import 'package:absensi_sederhana/database/db_helper.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+// import 'package:absensi_sederhana/helper/preferences.dart';
 import 'package:flutter/material.dart';
 
 class LoginPage extends StatefulWidget {
@@ -66,7 +67,7 @@ class _LoginPageState extends State<LoginPage> {
                 decoration: const InputDecoration(
                   labelText: "Email",
                   labelStyle: TextStyle(color: Colors.white),
-                  hintText: "Enter Your Email",
+                  hintText: "Enter your email",
                   hintStyle: TextStyle(color: Colors.white70),
                   prefixIcon: Icon(Icons.email, color: Colors.white70),
                   enabledBorder: UnderlineInputBorder(
@@ -88,7 +89,7 @@ class _LoginPageState extends State<LoginPage> {
                 decoration: const InputDecoration(
                   labelText: "Password",
                   labelStyle: TextStyle(color: Colors.white),
-                  hintText: "Enter Your Password",
+                  hintText: "Enter your password",
                   hintStyle: TextStyle(color: Colors.white70),
                   prefixIcon: Icon(Icons.lock, color: Colors.white70),
                   enabledBorder: UnderlineInputBorder(

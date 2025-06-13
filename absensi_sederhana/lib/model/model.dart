@@ -18,7 +18,7 @@ class Kehadiran {
 
   Map<String, dynamic> toMap() {
     return <String, dynamic>{
-      'id': id,
+      // 'id': id,
       'nama': nama,
       'keterangan': keterangan,
       'tanggal': tanggal,

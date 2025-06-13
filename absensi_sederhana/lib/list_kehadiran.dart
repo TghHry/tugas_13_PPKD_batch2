@@ -101,16 +101,16 @@ class _ListKehadiranPageState extends State<ListKehadiranPage> {
                                     TextButton(
                                       child: Text("Batal"),
                                       onPressed: () {
-                                        Navigator.of(context).pop(); // Menutup dialog
+                                        Navigator.of(context).pop();
                                       },
                                     ),
                                     TextButton(
                                     child: Text("Hapus"),
                                     onPressed: () {
-                                    if (item.id != null) { // Pastikan id tidak null
-                                    _deleteData(item.id!); // Menggunakan operator ! untuk memaksa
+                                    if (item.id != null) { 
+                                    _deleteData(item.id!); 
                                          }
-                                    Navigator.of(context).pop(); // Menutup dialog
+                                    Navigator.of(context).pop(); 
                                       },
                                     ) ,
 

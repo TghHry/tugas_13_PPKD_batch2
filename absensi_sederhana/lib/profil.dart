@@ -32,11 +32,37 @@ class _ProfilPageState extends State<ProfilPage> {
           IconButton(
             icon: const Icon(Icons.logout),
             onPressed: () async {
-              final prefs = await SharedPreferences.getInstance();
-              await prefs.clear();
-              Navigator.pushReplacement(
-                context,
-                MaterialPageRoute(builder: (_) => const LoginPage()),
+              // Menampilkan dialog konfirmasi sebelum logout
+              showDialog(
+                context: context,
+                builder: (BuildContext context) {
+                  return AlertDialog(
+                    title: const Text('Konfirmasi Logout'),
+                    content: const Text('Apakah Anda yakin ingin logout?'),
+                    actions: <Widget>[
+                      TextButton(
+                        child: const Text('Batal'),
+                        onPressed: () {
+                          Navigator.of(context).pop(); // Menutup dialog
+                        },
+                      ),
+                      TextButton(
+                        child: const Text('Logout'),
+                        onPressed: () async {
+                          final prefs = await SharedPreferences.getInstance();
+                          await prefs
+                              .clear(); // Menghapus data pengguna dari SharedPreferences
+                          Navigator.pushReplacement(
+                            context,
+                            MaterialPageRoute(
+                              builder: (_) => const LoginPage(),
+                            ), // Navigasi ke halaman login
+                          );
+                        },
+                      ),
+                    ],
+                  );
+                },
               );
             },
           ),

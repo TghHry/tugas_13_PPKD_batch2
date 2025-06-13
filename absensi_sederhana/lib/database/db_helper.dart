@@ -46,7 +46,6 @@ class DbHelper {
   // --- USER REGISTER ---
   static Future<void> registerUser({
     required String name,
-
     required String email,
     required String phone,
     required String password,
