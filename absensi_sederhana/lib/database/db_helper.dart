@@ -11,7 +11,6 @@ class DbHelper {
         await db.execute('''CREATE TABLE users (
             id INTEGER PRIMARY KEY AUTOINCREMENT,
             name TEXT,
-            username TEXT,
             email TEXT,
             phone TEXT,
             password TEXT
@@ -47,7 +46,7 @@ class DbHelper {
   // --- USER REGISTER ---
   static Future<void> registerUser({
     required String name,
-    required String username,
+
     required String email,
     required String phone,
     required String password,
@@ -55,11 +54,24 @@ class DbHelper {
     final db = await initDB();
     await db.insert('users', {
       'name': name,
-      'username': username,
       'email': email,
       'phone': phone,
       'password': password,
     }, conflictAlgorithm: ConflictAlgorithm.replace);
     print("User Registrasi Success");
   }
+
+  static Future<Map<String, dynamic>?> getUserData() async {
+  final db = await initDB();
+  final result = await db.query('users', where: 'id = ?', whereArgs: [1]); // Ganti dengan ID yang sesuai
+
+  if (result.isNotEmpty) {
+    return result.first;
+  } else {
+    return null;
+  }
 }
+
+}
+
+

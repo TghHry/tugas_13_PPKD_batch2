@@ -11,7 +11,6 @@ class RegisterPage extends StatefulWidget {
 
 class _RegisterPageState extends State<RegisterPage> {
   bool _obscureTextA = true;
-  final TextEditingController usernamecontroller = TextEditingController();
   final TextEditingController namecontroller = TextEditingController();
   final TextEditingController emailcontroller = TextEditingController();
   final TextEditingController phonecontroller = TextEditingController();
@@ -64,7 +63,7 @@ class _RegisterPageState extends State<RegisterPage> {
                 TextFormField(
                   validator:
                       (value) =>
-                        value == null || value.isEmpty ? "Wajib diisi" : null,
+                          value == null || value.isEmpty ? "Wajib diisi" : null,
                   style: TextStyle(color: Colors.white),
                   controller: namecontroller,
                   keyboardType: TextInputType.emailAddress,
@@ -88,31 +87,6 @@ class _RegisterPageState extends State<RegisterPage> {
                 ),
                 SizedBox(height: 24),
 
-                // User Name
-                TextFormField(
-                  validator:
-                      (value) =>
-                          value == null || value.isEmpty ? "Wajib diisi" : null,
-                  style: TextStyle(color: Colors.white),
-                  controller: usernamecontroller,
-                  keyboardType: TextInputType.emailAddress,
-                  decoration: InputDecoration(
-                    labelText: "Nick Name",
-                    labelStyle: TextStyle(color: Colors.white),
-                    errorStyle: TextStyle(color: Colors.white),
-                    hintText: "Enter your nick name",
-                    hintStyle: TextStyle(color: Colors.white70),
-                    prefixIcon: Icon(Icons.person, color: Colors.white70),
-                    enabledBorder: UnderlineInputBorder(
-                      borderSide: BorderSide(color: Colors.white),
-                    ),
-                    focusedBorder: UnderlineInputBorder(
-                      borderSide: BorderSide(color: Colors.white),
-                    ),
-                  ),
-                ),
-                SizedBox(height: 24),
-
                 //PHONE
                 TextFormField(
                   validator:
@@ -126,7 +100,7 @@ class _RegisterPageState extends State<RegisterPage> {
                     labelText: "Number Phone",
                     labelStyle: TextStyle(color: Colors.white),
                     errorStyle: TextStyle(color: Colors.white),
-                    hintText: "Enter Your Number",
+                    hintText: "Enter your number",
                     hintStyle: TextStyle(color: Colors.white70),
                     prefixIcon: Icon(Icons.phone, color: Colors.white70),
                     enabledBorder: UnderlineInputBorder(
@@ -152,7 +126,7 @@ class _RegisterPageState extends State<RegisterPage> {
                     labelText: "Email",
                     labelStyle: TextStyle(color: Colors.white),
                     errorStyle: TextStyle(color: Colors.white),
-                    hintText: "Enter Your Email",
+                    hintText: "Enter your email",
                     hintStyle: TextStyle(color: Colors.white70),
                     prefixIcon: Icon(Icons.email, color: Colors.white70),
                     enabledBorder: UnderlineInputBorder(
@@ -174,8 +148,10 @@ class _RegisterPageState extends State<RegisterPage> {
                   style: TextStyle(color: Colors.white70),
                   decoration: InputDecoration(
                     errorStyle: TextStyle(color: Colors.white),
-                    hintText: "Password",
-                    hintStyle: TextStyle(color: Colors.white70),
+                    labelText: 'Password',
+                    labelStyle: TextStyle(color: Colors.white),
+                    hintText: "Enter your password",
+                    hintStyle: TextStyle(color: Colors.white),
                     prefixIcon: Icon(Icons.lock, color: Colors.white70),
                     suffixIcon: IconButton(
                       icon: Icon(
@@ -215,14 +191,12 @@ class _RegisterPageState extends State<RegisterPage> {
                       if (_formkey.currentState!.validate()) {
                         print("Email : ${emailcontroller.text}");
                         print("Name : ${namecontroller.text}");
-                        print("Username : ${usernamecontroller.text}");
                         print("Number : ${phonecontroller.text}");
                         print("password : ${passwordcontroller.text}");
                         DbHelper.registerUser(
                           email: emailcontroller.text,
                           phone: phonecontroller.text,
                           name: namecontroller.text,
-                          username: usernamecontroller.text,
                           password: passwordcontroller.text,
                         );
                         ScaffoldMessenger.of(context).showSnackBar(

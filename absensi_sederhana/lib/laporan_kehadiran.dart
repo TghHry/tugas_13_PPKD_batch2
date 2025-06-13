@@ -14,9 +14,12 @@ class _LaporanKehadiranPageState extends State<LaporanKehadiranPage> {
   Future<void> loadLaporan() async {
     final db = await DbHelper.initDB();
     final result = await db.rawQuery('''
-    SELECT nama, keterangan, COUNT(*) as jumlah 
+    SELECT nama, 
+           SUM(CASE WHEN keterangan = 'Hadir' THEN 1 ELSE 0 END) AS Hadir,
+           SUM(CASE WHEN keterangan = 'Izin' THEN 1 ELSE 0 END) AS Izin,
+           SUM(CASE WHEN keterangan = 'Alpha' THEN 1 ELSE 0 END) AS Alpha
     FROM kehadiran 
-    GROUP BY nama, keterangan
+    GROUP BY nama
     ''');
 
     setState(() {
@@ -24,24 +27,26 @@ class _LaporanKehadiranPageState extends State<LaporanKehadiranPage> {
 
       for (var row in result) {
         String nama = row['nama'] as String? ?? '';
-        String ket = row['keterangan'] as String? ?? '';
-        int jumlah = row['jumlah'] as int? ?? 0;
+        int hadir = row['Hadir'] as int? ?? 0;
+        int izin = row['Izin'] as int? ?? 0;
+        int alpha = row['Alpha'] as int? ?? 0;
 
-        laporanBaru[nama] = laporanBaru[nama] ?? {};
-        laporanBaru[nama]![ket] = jumlah;
+        laporanBaru[nama] = {
+          'Hadir': hadir,
+          'Izin': izin,
+          'Alpha': alpha,
+        };
       }
 
       laporanPerOrang = laporanBaru;
     });
-  } 
+  }
 
   @override
   void initState() {
     super.initState();
     loadLaporan();
   }
-
-  
 
   @override
   Widget build(BuildContext context) {
@@ -52,15 +57,14 @@ class _LaporanKehadiranPageState extends State<LaporanKehadiranPage> {
         backgroundColor: Colors.teal[300],
         title: Text("Laporan Kehadiran", style: TextStyle(color: Colors.black)),
         centerTitle: true,
-        actions: [],
       ),
       body: GridView.builder(
         padding: EdgeInsets.all(16),
         gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-          crossAxisCount: 2, // Jumlah kolom
+          crossAxisCount: 2,
           crossAxisSpacing: 10,
           mainAxisSpacing: 10,
-          childAspectRatio: 1, // Rasio aspek untuk item
+          childAspectRatio: 1,
         ),
         itemCount: laporanPerOrang.length,
         itemBuilder: (context, index) {
@@ -73,7 +77,7 @@ class _LaporanKehadiranPageState extends State<LaporanKehadiranPage> {
             ),
             color: Colors.white,
             child: Padding(
-              padding: const EdgeInsets.all(8.0), // Mengurangi padding
+              padding: const EdgeInsets.all(8.0),
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
@@ -84,12 +88,11 @@ class _LaporanKehadiranPageState extends State<LaporanKehadiranPage> {
                     style: TextStyle(
                       fontWeight: FontWeight.bold,
                       fontSize: 16,
-                    ), // Mengurangi ukuran font
+                    ),
                     textAlign: TextAlign.center,
                   ),
                   SizedBox(height: 4),
                   Expanded(
-                    // Membuat konten fleksibel
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [

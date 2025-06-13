@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:absensi_sederhana/tambah_kehadiran.dart';
 import 'package:absensi_sederhana/edit_kehadiran.dart';
 import 'package:absensi_sederhana/database/db_helper.dart';
+import 'package:absensi_sederhana/model/model.dart';
 
 class ListKehadiranPage extends StatefulWidget {
   static const String id = "/ListKehadiran";
@@ -11,9 +12,13 @@ class ListKehadiranPage extends StatefulWidget {
 }
 
 class _ListKehadiranPageState extends State<ListKehadiranPage> {
-  Future<List<Map<String, dynamic>>> getData() async {
+  Future<List<Kehadiran>> getData() async {
     final db = await DbHelper.initDB();
-    return await db.query('kehadiran', orderBy: 'tanggal DESC');
+    final List<Map<String, dynamic>> maps = await db.query('kehadiran', orderBy: 'tanggal DESC');
+
+    return List.generate(maps.length, (i) {
+      return Kehadiran.fromMap(maps[i]); // Menggunakan metode dariMap
+    });
   }
 
   Future<void> _deleteData(int id) async {
@@ -32,11 +37,13 @@ class _ListKehadiranPageState extends State<ListKehadiranPage> {
         centerTitle: true,
         backgroundColor: Colors.teal[300],
       ),
-      body: FutureBuilder<List<Map<String, dynamic>>>(
+      body: FutureBuilder<List<Kehadiran>>(
         future: getData(),
         builder: (context, snapshot) {
           if (snapshot.connectionState == ConnectionState.waiting) {
             return Center(child: CircularProgressIndicator());
+          } else if (snapshot.hasError) {
+            return Center(child: Text("Terjadi kesalahan: ${snapshot.error}"));
           } else if (!snapshot.hasData || snapshot.data!.isEmpty) {
             return Center(child: Text("Belum ada data kehadiran."));
           }
@@ -57,11 +64,11 @@ class _ListKehadiranPageState extends State<ListKehadiranPage> {
                   child: ListTile(
                     leading: Icon(Icons.person, color: Colors.teal),
                     title: Text(
-                      item['nama'],
+                      item.nama,
                       style: TextStyle(fontWeight: FontWeight.bold),
                     ),
                     subtitle: Text(
-                      "${item['keterangan']} (${item['tanggal'].substring(0, 10)})",
+                      "${item.keterangan} (${item.tanggal.substring(0, 10)})",
                       style: TextStyle(color: Colors.black54),
                     ),
                     trailing: Row(
@@ -73,7 +80,7 @@ class _ListKehadiranPageState extends State<ListKehadiranPage> {
                             Navigator.push(
                               context,
                               MaterialPageRoute(
-                                builder: (_) => EditKehadiranPage(data: item),
+                                builder: (_) => EditKehadiranPage(kehadiran: item),
                               ),
                             ).then((_) => setState(() {}));
                           },
@@ -94,22 +101,19 @@ class _ListKehadiranPageState extends State<ListKehadiranPage> {
                                     TextButton(
                                       child: Text("Batal"),
                                       onPressed: () {
-                                        Navigator.of(
-                                          context,
-                                        ).pop(); // Menutup dialog
+                                        Navigator.of(context).pop(); // Menutup dialog
                                       },
                                     ),
                                     TextButton(
-                                      child: Text("Hapus"),
-                                      onPressed: () {
-                                        _deleteData(
-                                          item['id'],
-                                        ); // Memanggil fungsi hapus data
-                                        Navigator.of(
-                                          context,
-                                        ).pop(); // Menutup dialog
+                                    child: Text("Hapus"),
+                                    onPressed: () {
+                                    if (item.id != null) { // Pastikan id tidak null
+                                    _deleteData(item.id!); // Menggunakan operator ! untuk memaksa
+                                         }
+                                    Navigator.of(context).pop(); // Menutup dialog
                                       },
-                                    ),
+                                    ) ,
+
                                   ],
                                 );
                               },
@@ -127,11 +131,10 @@ class _ListKehadiranPageState extends State<ListKehadiranPage> {
       ),
       floatingActionButton: FloatingActionButton(
         backgroundColor: Colors.teal,
-        onPressed:
-            () => Navigator.push(
-              context,
-              MaterialPageRoute(builder: (context) => TambahKehadiranPage()),
-            ).then((_) => setState(() {})), // Refresh after return
+        onPressed: () => Navigator.push(
+          context,
+          MaterialPageRoute(builder: (context) => TambahKehadiranPage()),
+        ).then((_) => setState(() {})), // Refresh after return
         child: Icon(Icons.add, color: Colors.black),
       ),
     );

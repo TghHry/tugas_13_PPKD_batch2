@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart'; // untuk DateFormat
 import 'package:absensi_sederhana/database/db_helper.dart';
+import 'package:absensi_sederhana/model/model.dart';
 
 class TambahKehadiranPage extends StatefulWidget {
-  //StatefulWidget: karena membutuhkan state untuk form input
   @override
   _TambahKehadiranPageState createState() => _TambahKehadiranPageState();
 }
@@ -11,7 +11,6 @@ class TambahKehadiranPage extends StatefulWidget {
 class _TambahKehadiranPageState extends State<TambahKehadiranPage> {
   final _formKey = GlobalKey<FormState>();
   final TextEditingController namaController = TextEditingController();
-
   String selectedKeterangan = 'Hadir';
 
   void _simpanKehadiran() async {
@@ -22,14 +21,17 @@ class _TambahKehadiranPageState extends State<TambahKehadiranPage> {
       String tanggal = DateFormat('yyyy-MM-dd').format(DateTime.now());
       String keterangan = selectedKeterangan;
 
-      await db.insert('kehadiran', {
-        'nama': nama,
-        'tanggal': tanggal,
-        'keterangan': keterangan,
-      });
+      // Menggunakan model Kehadiran
+      Kehadiran kehadiran = Kehadiran(
+        nama: nama,
+        keterangan: keterangan,
+        tanggal: tanggal,
+      );
+
+      await db.insert('kehadiran', kehadiran.toMap());
 
       print(
-        'Data yang disimpan: nama=$nama, tanggal=$tanggal, keterangan=$keterangan',
+        'Data yang disimpan: nama=${kehadiran.nama}, tanggal=${kehadiran.tanggal}, keterangan=${kehadiran.keterangan}',
       );
 
       Navigator.pop(context);
@@ -67,13 +69,12 @@ class _TambahKehadiranPageState extends State<TambahKehadiranPage> {
                   SizedBox(height: 16),
                   DropdownButtonFormField<String>(
                     value: selectedKeterangan,
-                    items:
-                        ['Hadir', 'Izin', 'Alpha'].map((status) {
-                          return DropdownMenuItem<String>(
-                            value: status,
-                            child: Text(status),
-                          );
-                        }).toList(),
+                    items: ['Hadir', 'Izin', 'Alpha'].map((status) {
+                      return DropdownMenuItem<String>(
+                        value: status,
+                        child: Text(status),
+                      );
+                    }).toList(),
                     onChanged: (val) {
                       setState(() {
                         selectedKeterangan = val!;

@@ -8,7 +8,6 @@ class BottomNavigator extends StatefulWidget {
   final String email;
   final String phone;
 
-  
   BottomNavigator({
     super.key,
     required this.name,
@@ -16,7 +15,6 @@ class BottomNavigator extends StatefulWidget {
     required this.phone,
   });
 
- 
   @override
   State<BottomNavigator> createState() => _BottomNavigatorState();
 }
@@ -43,6 +41,8 @@ class _BottomNavigatorState extends State<BottomNavigator> {
       bottomNavigationBar: BottomNavigationBar(
         backgroundColor: Color(0xff819A91),
         currentIndex: _selectedIndex,
+        selectedItemColor: Color(0xffE7EFC7),
+        unselectedItemColor: Colors.white,
         onTap: (int index) {
           setState(() {
             _selectedIndex = index;
