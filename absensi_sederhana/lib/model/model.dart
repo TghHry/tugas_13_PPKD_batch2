@@ -6,7 +6,7 @@ class Kehadiran {
   final String nama;
   final String keterangan;
   final String tanggal;
-  
+
   Kehadiran({
     this.id,
     required this.nama,

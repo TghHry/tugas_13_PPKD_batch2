@@ -61,16 +61,7 @@ class DbHelper {
     print("User Registrasi Success");
   }
 
-  static Future<Map<String, dynamic>?> getUserData() async {
-  final db = await initDB();
-  final result = await db.query('users', where: 'id = ?', whereArgs: [1]); // Ganti dengan ID yang sesuai
 
-  if (result.isNotEmpty) {
-    return result.first;
-  } else {
-    return null;
-  }
-}
 
 }
 
