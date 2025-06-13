@@ -14,7 +14,10 @@ class ListKehadiranPage extends StatefulWidget {
 class _ListKehadiranPageState extends State<ListKehadiranPage> {
   Future<List<Kehadiran>> getData() async {
     final db = await DbHelper.initDB();
-    final List<Map<String, dynamic>> maps = await db.query('kehadiran', orderBy: 'tanggal DESC');
+    final List<Map<String, dynamic>> maps = await db.query(
+      'kehadiran',
+      orderBy: 'tanggal DESC',
+    );
 
     return List.generate(maps.length, (i) {
       return Kehadiran.fromMap(maps[i]); // Menggunakan metode dariMap
@@ -68,7 +71,7 @@ class _ListKehadiranPageState extends State<ListKehadiranPage> {
                       style: TextStyle(fontWeight: FontWeight.bold),
                     ),
                     subtitle: Text(
-                      "${item.keterangan} (${item.tanggal.substring(0, 10)})",
+                      "${item.keterangan} (${item.tanggal.substring(0, )})",
                       style: TextStyle(color: Colors.black54),
                     ),
                     trailing: Row(
@@ -80,7 +83,8 @@ class _ListKehadiranPageState extends State<ListKehadiranPage> {
                             Navigator.push(
                               context,
                               MaterialPageRoute(
-                                builder: (_) => EditKehadiranPage(kehadiran: item),
+                                builder:
+                                    (_) => EditKehadiranPage(kehadiran: item),
                               ),
                             ).then((_) => setState(() {}));
                           },
@@ -105,15 +109,14 @@ class _ListKehadiranPageState extends State<ListKehadiranPage> {
                                       },
                                     ),
                                     TextButton(
-                                    child: Text("Hapus"),
-                                    onPressed: () {
-                                    if (item.id != null) { 
-                                    _deleteData(item.id!); 
-                                         }
-                                    Navigator.of(context).pop(); 
+                                      child: Text("Hapus"),
+                                      onPressed: () {
+                                        if (item.id != null) {
+                                          _deleteData(item.id!);
+                                        }
+                                        Navigator.of(context).pop();
                                       },
-                                    ) ,
-
+                                    ),
                                   ],
                                 );
                               },
@@ -131,10 +134,11 @@ class _ListKehadiranPageState extends State<ListKehadiranPage> {
       ),
       floatingActionButton: FloatingActionButton(
         backgroundColor: Colors.teal,
-        onPressed: () => Navigator.push(
-          context,
-          MaterialPageRoute(builder: (context) => TambahKehadiranPage()),
-        ).then((_) => setState(() {})), // Refresh after return
+        onPressed:
+            () => Navigator.push(
+              context,
+              MaterialPageRoute(builder: (context) => TambahKehadiranPage()),
+            ).then((_) => setState(() {})), // Refresh after return
         child: Icon(Icons.add, color: Colors.black),
       ),
     );

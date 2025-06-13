@@ -42,7 +42,7 @@ class _EditKehadiranPageState extends State<EditKehadiranPage> {
         },
         where: 'id = ?',
         whereArgs: [
-          // widget.kehadiran.id, // Menggunakan id dari objek Kehadiran
+          widget.kehadiran.id, // Menggunakan id dari objek Kehadiran
         ],
       );
       if (context.mounted) Navigator.pop(context);
